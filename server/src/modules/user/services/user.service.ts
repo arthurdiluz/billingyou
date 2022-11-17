@@ -45,6 +45,7 @@ export class UserService {
   find(query: FindUsersDto) {
     return this.userRepository.findMany({
       where: {
+        deletedAt: null,
         ...query,
       },
     });
