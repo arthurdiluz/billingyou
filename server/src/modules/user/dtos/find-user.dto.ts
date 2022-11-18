@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsOptional, Length } from 'class-validator';
+import { IsEmail, IsOptional, MaxLength } from 'class-validator';
 
 export class FindUsersDto {
   @ApiPropertyOptional({
@@ -8,7 +8,7 @@ export class FindUsersDto {
     example: 'John',
   })
   @IsOptional()
-  @Length(2, 255)
+  @MaxLength(32)
   firstName?: string;
 
   @ApiPropertyOptional({
@@ -17,7 +17,7 @@ export class FindUsersDto {
     example: 'Smith',
   })
   @IsOptional()
-  @Length(2, 255)
+  @MaxLength(32)
   lastName?: string;
 
   @ApiPropertyOptional({
@@ -26,7 +26,7 @@ export class FindUsersDto {
     example: 'john.smith@example.com',
   })
   @IsOptional()
-  @Length(1, 255)
+  @MaxLength(32)
   @IsEmail()
   email?: string;
 }

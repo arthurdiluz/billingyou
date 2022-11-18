@@ -8,7 +8,7 @@ export class CreateUserDto {
     example: 'John',
   })
   @IsNotEmpty()
-  @Length(2, 255)
+  @Length(2, 32)
   firstName: string;
 
   @ApiProperty({
@@ -17,7 +17,7 @@ export class CreateUserDto {
     example: 'Smith',
   })
   @IsNotEmpty()
-  @Length(2, 255)
+  @Length(2, 32)
   lastName: string;
 
   @ApiProperty({
@@ -26,7 +26,7 @@ export class CreateUserDto {
     example: 'john.smith@example.com',
   })
   @IsNotEmpty()
-  @Length(1, 255)
+  @Length(4, 64)
   @IsEmail()
   email: string;
 
@@ -36,6 +36,6 @@ export class CreateUserDto {
     example: '123456',
   })
   @IsNotEmpty()
-  @Length(6, 255)
+  @Length(6, 64)
   password: string;
 }
