@@ -5,6 +5,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   NotAcceptableException,
   NotFoundException,
   Param,
@@ -67,12 +69,13 @@ export class BillingController {
         throw new NotAcceptableException(`Date ${body?.dueDate} has expired`);
       }
 
-      return await this.billingService.updateById(id, body);
+      return await this.billingService.update(id, body);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async deleteById(@Param('id', new ParseUUIDPipe()) id: string) {
     try {
@@ -85,6 +88,8 @@ export class BillingController {
       if (billing?.deletedAt) {
         throw new ConflictException('Billing already deleted');
       }
+
+      return await this.billingService.softDelete(id);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }

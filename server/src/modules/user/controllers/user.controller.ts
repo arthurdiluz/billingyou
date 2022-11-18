@@ -34,21 +34,19 @@ export class UserController {
     }
   }
 
-  @Get(':id')
-  async findById(@Param('id', new ParseUUIDPipe()) id: string) {
+  @Get()
+  async find(@Query() query: FindUsersDto) {
     try {
-      // Prisma already throws error if no user found
-      return await this.userService.findById(id);
+      return await this.userService.find(query);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
   }
 
-  @Get()
-  // @ApiQuery({ name: 'sortField', enum: Prisma.UserScalarFieldEnum })
-  async find(@Query() query: FindUsersDto) {
+  @Get(':id')
+  async findById(@Param('id', new ParseUUIDPipe()) id: string) {
     try {
-      return await this.userService.find(query);
+      return await this.userService.findById(id);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
@@ -62,9 +60,11 @@ export class UserController {
     try {
       const user = await this.userService.findById(id);
 
-      if (!user) throw new NotFoundException(`User ID "${id}" not found`);
+      if (!user) {
+        throw new NotFoundException(`User ID "${id}" not found`);
+      }
 
-      return await this.userService.updateById(id, body);
+      return await this.userService.update(id, body);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
@@ -79,7 +79,7 @@ export class UserController {
       if (!user) throw new NotFoundException('User not found');
       if (user?.deletedAt) throw new ConflictException('User already deleted');
 
-      return await this.userService.softDeleteById(id);
+      return await this.userService.softDelete(id);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }

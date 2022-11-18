@@ -8,44 +8,36 @@ import { CustomerRepository } from '../repositories/customer.repository';
 export class CustomerService {
   constructor(private readonly customerRepository: CustomerRepository) {}
 
-  async create({ userId, ...body }: CreateCustomerDto) {
-    return await this.customerRepository.create({
+  create({ userId, ...body }: CreateCustomerDto) {
+    return this.customerRepository.create({
       data: {
         User: { connect: { id: userId } },
         ...body,
       },
-      include: {
-        User: true,
+    });
+  }
+
+  find(query: FindCustomerDto) {
+    return this.customerRepository.findMany({
+      where: {
+        deletedAt: null,
+        ...query,
       },
     });
   }
 
-  async findById(id: string) {
-    return await this.customerRepository.findUnique({
-      where: { id },
-    });
+  findById(id: string) {
+    return this.customerRepository.findUnique({ where: { id } });
   }
 
-  async find(query: FindCustomerDto) {
-    return this.customerRepository.findMany({
-      where: { ...query },
-      include: { User: true },
-    });
-  }
-
-  async updateById(id: string, body: UpdateCustomerDto) {
+  update(id: string, body: UpdateCustomerDto) {
     return this.customerRepository.update({
       where: { id },
       data: { ...body },
-      include: { User: true },
     });
   }
 
-  async softDeleteById(id: string) {
-    return this.customerRepository.update({
-      where: { id },
-      data: { deletedAt: new Date() },
-      include: { User: true },
-    });
+  softDelete(id: string) {
+    return this.customerRepository.softDelete({ where: { id } });
   }
 }

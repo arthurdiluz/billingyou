@@ -34,7 +34,7 @@ export class UpdateBillingDto {
   @ApiPropertyOptional({
     type: String,
     required: false,
-    example: '2022-12-18',
+    example: '2023-01-18',
   })
   @IsOptional()
   @IsDateString()

@@ -10,15 +10,35 @@ export class BillingRepository {
     return this.prismaService.billing.create(args);
   }
 
-  public findUnique(args: Prisma.UserFindUniqueOrThrowArgs) {
-    return this.prismaService.billing.findUniqueOrThrow(args);
-  }
-
   public findMany(args: Prisma.BillingFindManyArgs) {
     return this.prismaService.billing.findMany(args);
   }
 
+  public findUnique(args: Prisma.UserFindUniqueOrThrowArgs) {
+    return this.prismaService.billing.findUniqueOrThrow(args);
+  }
+
   public update(args: Prisma.BillingUpdateArgs) {
-    return this.prismaService.billing.update(args);
+    const { data, ...others } = args;
+
+    return this.prismaService.billing.update({
+      data: {
+        updatedAt: new Date(),
+        ...data,
+      },
+      ...others,
+    });
+  }
+
+  public softDelete(args: Prisma.UserDeleteArgs) {
+    const date = new Date();
+
+    return this.prismaService.user.update({
+      data: {
+        updatedAt: date,
+        deletedAt: date,
+      },
+      ...args,
+    });
   }
 }

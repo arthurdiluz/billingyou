@@ -9,7 +9,7 @@ import { BillingRepository } from '../repositories/billing.repository';
 export class BillingService {
   constructor(private readonly billingRepository: BillingRepository) {}
 
-  async create({ userId, customerId, ...body }: CreateBillingDto) {
+  create({ userId, customerId, ...body }: CreateBillingDto) {
     return this.billingRepository.create({
       data: {
         User: { connect: { id: userId } },
@@ -20,34 +20,27 @@ export class BillingService {
     });
   }
 
-  async find(query: FindBillingDto) {
+  find(query: FindBillingDto) {
     return this.billingRepository.findMany({
-      where: { ...query },
+      where: {
+        deletedAt: null,
+        ...query,
+      },
     });
   }
 
-  async findById(id: string) {
+  findById(id: string) {
     return this.billingRepository.findUnique({ where: { id } });
   }
 
-  async updateById(id: string, body: UpdateBillingDto) {
+  update(id: string, body: UpdateBillingDto) {
     return this.billingRepository.update({
       where: { id },
-      data: {
-        updatedAt: new Date(),
-        ...body,
-      },
+      data: { ...body },
     });
   }
 
-  async softDeleteById(id: string) {
-    const now = new Date();
-    return this.billingRepository.update({
-      where: { id },
-      data: {
-        updatedAt: now,
-        deletedAt: now,
-      },
-    });
+  softDelete(id: string) {
+    return this.billingRepository.softDelete({ where: { id } });
   }
 }

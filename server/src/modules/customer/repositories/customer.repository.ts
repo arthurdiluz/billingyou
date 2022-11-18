@@ -10,15 +10,35 @@ export class CustomerRepository {
     return this.prismaService.customer.create(args);
   }
 
-  public findUnique(args: Prisma.CustomerFindUniqueOrThrowArgs) {
-    return this.prismaService.customer.findUniqueOrThrow(args);
-  }
-
   public findMany(args: Prisma.CustomerFindManyArgs) {
     return this.prismaService.customer.findMany(args);
   }
 
+  public findUnique(args: Prisma.CustomerFindUniqueOrThrowArgs) {
+    return this.prismaService.customer.findUniqueOrThrow(args);
+  }
+
   public update(args: Prisma.CustomerUpdateArgs) {
-    return this.prismaService.customer.update(args);
+    const { data, ...others } = args;
+
+    return this.prismaService.customer.update({
+      data: {
+        updatedAt: new Date(),
+        ...data,
+      },
+      ...others,
+    });
+  }
+
+  public softDelete(args: Prisma.UserDeleteArgs) {
+    const date = new Date();
+
+    return this.prismaService.user.update({
+      data: {
+        updatedAt: date,
+        deletedAt: date,
+      },
+      ...args,
+    });
   }
 }

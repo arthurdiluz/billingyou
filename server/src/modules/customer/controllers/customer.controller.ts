@@ -5,6 +5,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
   ParseUUIDPipe,
@@ -33,7 +35,6 @@ export class CustomerController {
   }
 
   @Get()
-  //@ApiQuery({ name: 'sortField', enum: Prisma.CustomerScalarFieldEnum })
   async find(@Query() query: FindCustomerDto) {
     try {
       return await this.customerService.find(query);
@@ -45,8 +46,7 @@ export class CustomerController {
   @Get(':id')
   async findById(@Param('id', new ParseUUIDPipe()) id: string) {
     try {
-      // Prisma already throws error if no user found
-      return this.customerService.findById(id);
+      return await this.customerService.findById(id);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
@@ -64,12 +64,13 @@ export class CustomerController {
         throw new NotFoundException(`Customer ID "${id}" not found`);
       }
 
-      return await this.customerService.updateById(id, body);
+      return await this.customerService.update(id, body);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
   }
 
+  @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async deleteById(@Param('id', new ParseUUIDPipe()) id: string) {
     try {
@@ -83,7 +84,7 @@ export class CustomerController {
         throw new ConflictException('Customer already deleted');
       }
 
-      return await this.customerService.softDeleteById(id);
+      return await this.customerService.softDelete(id);
     } catch (error) {
       throw new BadRequestException(error?.message);
     }

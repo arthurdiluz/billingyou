@@ -18,7 +18,7 @@ export class CreateCustomerDto {
     required: true,
     example: randomUUID(),
   })
-  @IsUUID()
+  @IsUUID('4')
   @Length(36, 36)
   userId: string;
 
