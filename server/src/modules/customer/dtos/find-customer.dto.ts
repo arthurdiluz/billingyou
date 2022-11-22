@@ -34,7 +34,7 @@ export class FindCustomerDto {
   @ApiPropertyOptional({
     type: String,
     required: false,
-    example: 'john@smith@email.com',
+    example: 'john.smith@email.com',
   })
   @IsOptional()
   @IsString()

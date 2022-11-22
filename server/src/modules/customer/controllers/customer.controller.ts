@@ -15,6 +15,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { UserService } from 'src/modules/user/services/user.service';
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { FindCustomerDto } from '../dtos/find-customer.dto';
 import { UpdateCustomerDto } from '../dtos/update-customer.dto';
@@ -23,10 +24,24 @@ import { CustomerService } from '../services/customer.service';
 @ApiTags('Customer')
 @Controller('customer')
 export class CustomerController {
-  constructor(private readonly customerService: CustomerService) {}
+  constructor(
+    private readonly customerService: CustomerService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post()
   async create(@Body() body: CreateCustomerDto) {
+    const { userId } = body;
+    const user = await this.userService.findById(userId);
+
+    if (!user) {
+      throw new NotFoundException(`User ID "${userId}" not found`);
+    }
+
+    if (user?.deletedAt) {
+      throw new ConflictException('User already deleted');
+    }
+
     try {
       return await this.customerService.create(body);
     } catch (error) {

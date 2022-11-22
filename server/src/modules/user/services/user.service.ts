@@ -33,6 +33,15 @@ export class UserService {
         deletedAt: null,
         ...query,
       },
+      select: {
+        createdAt: true,
+        updatedAt: true,
+        deletedAt: true,
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+      },
     });
   }
 

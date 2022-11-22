@@ -3,9 +3,10 @@ import { CustomerService } from './services/customer.service';
 import { CustomerController } from './controllers/customer.controller';
 import { PrismaService } from 'src/database/prisma.service';
 import { CustomerRepository } from './repositories/customer.repository';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [],
+  imports: [UserModule],
   controllers: [CustomerController],
   providers: [PrismaService, CustomerService, CustomerRepository],
   exports: [],

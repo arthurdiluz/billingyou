@@ -29,7 +29,7 @@ export class CreateCustomerDto {
   })
   @IsNotEmpty()
   @IsString()
-  @Length(64)
+  @MaxLength(64)
   name: string;
 
   @ApiProperty({
@@ -51,7 +51,7 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   @IsString()
   @IsEmail()
-  @Length(32)
+  @MaxLength(32)
   email: string;
 
   @ApiProperty({
@@ -61,6 +61,6 @@ export class CreateCustomerDto {
   })
   @IsNotEmpty()
   @IsNumberString()
-  @Length(32)
+  @MaxLength(32)
   phone: string;
 }
