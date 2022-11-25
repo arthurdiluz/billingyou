@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid()) @db.VarChar(36)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @default(now())
+  deletedAt DateTime?
+
+  firstName String @db.VarChar(32)
+  lastName  String @db.VarChar(32)
+  email     String @unique @db.VarChar(32)
+  password  String @db.VarChar(64)
+
+  Customer Customer[]
+  Billing  Billing[]
+}
+
+model Customer {
+  id     String @id @default(uuid()) @db.VarChar(36)
+  userId String @db.VarChar(36)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @default(now())
+  deletedAt DateTime?
+
+  name    String @db.VarChar(64)
+  cpfCnpj String @unique @db.VarChar(32)
+  email   String @unique @db.VarChar(32)
+  phone   String @db.VarChar(32)
+
+  User    User      @relation(fields: [userId], references: [id])
+  Billing Billing[]
+}
+
+model Billing {
+  id         String @id @default(uuid()) @db.VarChar(36)
+  userId     String @db.VarChar(36)
+  customerId String @db.VarChar(36)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @default(now())
+  deletedAt DateTime?
+
+  description String        @db.VarChar(256)
+  status      BillingStatus
+  value       Decimal       @db.Decimal(8, 2)
+  dueDate     DateTime      @db.Date
+
+  User     User     @relation(fields: [userId], references: [id])
+  Customer Customer @relation(fields: [customerId], references: [id])
+}
+
+enum BillingStatus {
+  PENDING
+  PAID
+  LATE
+}
