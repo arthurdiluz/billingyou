@@ -18,6 +18,10 @@ export class CustomerRepository {
     return this.prismaService.customer.findUniqueOrThrow(args);
   }
 
+  public count(args: Prisma.CustomerCountArgs) {
+    return this.prismaService.customer.count(args);
+  }
+
   public update(args: Prisma.CustomerUpdateArgs) {
     const { data, ...others } = args;
 

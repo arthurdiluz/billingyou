@@ -41,4 +41,9 @@ export class BillingRepository {
       ...args,
     });
   }
+
+  public groupBy({ by, _sum, where }: Prisma.BillingGroupByArgs) {
+    // FIXME: values extracted due to a conflict when calling prismaService and passing args
+    return this.prismaService.billing.groupBy({ by, _sum, where });
+  }
 }

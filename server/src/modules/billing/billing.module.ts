@@ -3,11 +3,12 @@ import { BillingService } from './services/billing.service';
 import { BillingController } from './controllers/billing.controller';
 import { PrismaService } from 'src/database/prisma.service';
 import { BillingRepository } from './repositories/billing.repository';
+import { CustomerModule } from '../customer/customer.module';
 
 @Module({
-  imports: [],
+  imports: [CustomerModule],
   controllers: [BillingController],
   providers: [PrismaService, BillingService, BillingRepository],
-  exports: [],
+  exports: [BillingService, BillingRepository],
 })
 export class BillingModule {}
