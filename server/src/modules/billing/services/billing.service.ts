@@ -14,41 +14,6 @@ export class BillingService {
     private readonly customerRepository: CustomerRepository,
   ) {}
 
-  create({ userId, customerId, ...body }: CreateBillingDto) {
-    return this.billingRepository.create({
-      data: {
-        User: { connect: { id: userId } },
-        Customer: { connect: { id: customerId } },
-        status: BillingStatus.PENDING,
-        ...body,
-      },
-    });
-  }
-
-  find(query: FindBillingDto) {
-    return this.billingRepository.findMany({
-      where: {
-        deletedAt: null,
-        ...query,
-      },
-    });
-  }
-
-  findById(id: string) {
-    return this.billingRepository.findUnique({ where: { id } });
-  }
-
-  update(id: string, body: UpdateBillingDto) {
-    return this.billingRepository.update({
-      where: { id },
-      data: { ...body },
-    });
-  }
-
-  softDelete(id: string) {
-    return this.billingRepository.softDelete({ where: { id } });
-  }
-
   async dashboard() {
     const billings = await this.billingRepository.groupBy({
       by: ['dueDate', 'status'],
@@ -85,5 +50,40 @@ export class BillingService {
       history,
       customers,
     };
+  }
+
+  create({ userId, customerId, ...body }: CreateBillingDto) {
+    return this.billingRepository.create({
+      data: {
+        User: { connect: { id: userId } },
+        Customer: { connect: { id: customerId } },
+        status: BillingStatus.PENDING,
+        ...body,
+      },
+    });
+  }
+
+  find(query: FindBillingDto) {
+    return this.billingRepository.findMany({
+      where: {
+        deletedAt: null,
+        ...query,
+      },
+    });
+  }
+
+  findById(id: string) {
+    return this.billingRepository.findUnique({ where: { id } });
+  }
+
+  update(id: string, body: UpdateBillingDto) {
+    return this.billingRepository.update({
+      where: { id },
+      data: { ...body },
+    });
+  }
+
+  softDelete(id: string) {
+    return this.billingRepository.softDelete({ where: { id } });
   }
 }

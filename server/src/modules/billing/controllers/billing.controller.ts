@@ -26,6 +26,15 @@ import { BillingService } from '../services/billing.service';
 export class BillingController {
   constructor(private readonly billingService: BillingService) {}
 
+  @Get('dashboard')
+  async dashboard() {
+    try {
+      return await this.billingService.dashboard();
+    } catch (error) {
+      throw new BadRequestException(error?.message);
+    }
+  }
+
   @Post()
   async create(@Body() body: CreateBillingDto) {
     try {
@@ -45,7 +54,7 @@ export class BillingController {
   }
 
   @Get(':id')
-  async findById(@Param('id', new ParseUUIDPipe()) id: string) {
+  async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     try {
       return await this.billingService.findById(id);
     } catch (error) {
@@ -55,7 +64,7 @@ export class BillingController {
 
   @Patch(':id')
   async update(
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() body: UpdateBillingDto,
   ) {
     try {
@@ -77,7 +86,9 @@ export class BillingController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  async deleteById(@Param('id', new ParseUUIDPipe()) id: string) {
+  async deleteById(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
     try {
       const billing = await this.billingService.findById(id);
 
