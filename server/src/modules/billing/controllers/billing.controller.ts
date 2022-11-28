@@ -22,7 +22,7 @@ import { UpdateBillingDto } from '../dtos/update-billing.dto';
 import { BillingService } from '../services/billing.service';
 
 @ApiTags('Billing')
-@Controller('billing')
+@Controller('api/billing')
 export class BillingController {
   constructor(private readonly billingService: BillingService) {}
 

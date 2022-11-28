@@ -22,7 +22,7 @@ import { UpdateCustomerDto } from '../dtos/update-customer.dto';
 import { CustomerService } from '../services/customer.service';
 
 @ApiTags('Customer')
-@Controller('customer')
+@Controller('api/customer')
 export class CustomerController {
   constructor(
     private readonly customerService: CustomerService,
