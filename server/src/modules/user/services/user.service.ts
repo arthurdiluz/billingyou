@@ -46,18 +46,11 @@ export class UserService {
   }
 
   findById(id: string) {
-    return this.userRepository.findUnique({
-      where: { id },
-      select: {
-        createdAt: true,
-        updatedAt: true,
-        deletedAt: true,
-        id: true,
-        firstName: true,
-        lastName: true,
-        email: true,
-      },
-    });
+    return this.userRepository.findUnique({ where: { id } });
+  }
+
+  findByEmail(email: string) {
+    return this.userRepository.findUnique({ where: { email } });
   }
 
   update(id: string, { password, ...body }: UpdateUserDto) {
