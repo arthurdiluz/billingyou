@@ -14,8 +14,8 @@ export class UserRepository {
     return this.prismaService.user.findMany(args);
   }
 
-  public findUnique(args: Prisma.UserFindUniqueOrThrowArgs) {
-    return this.prismaService.user.findUniqueOrThrow(args);
+  public findUnique(args: Prisma.UserFindUniqueArgs) {
+    return this.prismaService.user.findUnique(args);
   }
 
   public update(args: Prisma.UserUpdateArgs) {

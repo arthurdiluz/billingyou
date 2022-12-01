@@ -3,7 +3,7 @@ import { Type } from 'class-transformer';
 import {
   IsDateString,
   IsNotEmpty,
-  IsNumberString,
+  IsNumber,
   IsString,
   IsUUID,
   Length,
@@ -48,7 +48,7 @@ export class CreateBillingDto {
     example: '1500',
   })
   @IsNotEmpty()
-  @IsNumberString()
+  @IsNumber()
   @Type(() => Number)
   value: number;
 

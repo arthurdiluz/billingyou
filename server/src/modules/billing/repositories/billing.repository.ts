@@ -14,8 +14,8 @@ export class BillingRepository {
     return this.prismaService.billing.findMany(args);
   }
 
-  public findUnique(args: Prisma.UserFindUniqueOrThrowArgs) {
-    return this.prismaService.billing.findUniqueOrThrow(args);
+  public findUnique(args: Prisma.UserFindUniqueArgs) {
+    return this.prismaService.billing.findUnique(args);
   }
 
   public update(args: Prisma.BillingUpdateArgs) {
@@ -40,5 +40,10 @@ export class BillingRepository {
       },
       ...args,
     });
+  }
+
+  public groupBy({ by, _sum, where }: Prisma.BillingGroupByArgs) {
+    // FIXME: values extracted due to a conflict when calling prismaService and passing args
+    return this.prismaService.billing.groupBy({ by, _sum, where });
   }
 }

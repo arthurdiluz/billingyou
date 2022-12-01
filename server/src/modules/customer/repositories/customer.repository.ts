@@ -14,8 +14,12 @@ export class CustomerRepository {
     return this.prismaService.customer.findMany(args);
   }
 
-  public findUnique(args: Prisma.CustomerFindUniqueOrThrowArgs) {
-    return this.prismaService.customer.findUniqueOrThrow(args);
+  public findUnique(args: Prisma.CustomerFindUniqueArgs) {
+    return this.prismaService.customer.findUnique(args);
+  }
+
+  public count(args: Prisma.CustomerCountArgs) {
+    return this.prismaService.customer.count(args);
   }
 
   public update(args: Prisma.CustomerUpdateArgs) {

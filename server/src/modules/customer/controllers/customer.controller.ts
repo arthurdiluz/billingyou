@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -13,7 +12,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from 'src/modules/user/services/user.service';
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
@@ -22,54 +23,59 @@ import { UpdateCustomerDto } from '../dtos/update-customer.dto';
 import { CustomerService } from '../services/customer.service';
 
 @ApiTags('Customer')
-@Controller('customer')
+@Controller('api/customer')
 export class CustomerController {
   constructor(
     private readonly customerService: CustomerService,
     private readonly userService: UserService,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Body() body: CreateCustomerDto) {
     const { userId } = body;
     const user = await this.userService.findById(userId);
 
-    if (!user) {
-      throw new NotFoundException(`User ID "${userId}" not found`);
-    }
-
-    if (user?.deletedAt) {
-      throw new ConflictException('User already deleted');
-    }
+    if (!user) throw new NotFoundException(`User ID "${userId}" not found`);
+    if (user?.deletedAt) throw new ConflictException('User already deleted');
 
     try {
       return await this.customerService.create(body);
-    } catch (error) {
-      throw new BadRequestException(error?.mesage);
+    } catch (Error) {
+      throw Error;
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   async find(@Query() query: FindCustomerDto) {
     try {
       return await this.customerService.find(query);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
-  async findById(@Param('id', new ParseUUIDPipe()) id: string) {
+  async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     try {
-      return await this.customerService.findById(id);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+      const customer = await this.customerService.findById(id);
+
+      if (!customer) {
+        throw new NotFoundException(`Customer ID "${id}" not found`);
+      }
+
+      return customer;
+    } catch (Error) {
+      throw Error;
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   async update(
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() body: UpdateCustomerDto,
   ) {
     try {
@@ -80,14 +86,17 @@ export class CustomerController {
       }
 
       return await this.customerService.update(id, body);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  async deleteById(@Param('id', new ParseUUIDPipe()) id: string) {
+  async deleteById(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
     try {
       const customer = await this.customerService.findById(id);
 
@@ -100,8 +109,8 @@ export class CustomerController {
       }
 
       return await this.customerService.softDelete(id);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 }
