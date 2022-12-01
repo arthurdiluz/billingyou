@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BillingStatus } from '@prisma/client';
-import { DateTime as dt } from 'luxon';
+import { DateTime, DateTime as dt } from 'luxon';
 import { CustomerRepository } from 'src/modules/customer/repositories/customer.repository';
 import { CreateBillingDto } from '../dtos/create-billing.dto';
 import { FindBillingDto } from '../dtos/find-billing.dto';
@@ -52,12 +52,13 @@ export class BillingService {
     };
   }
 
-  create({ userId, customerId, ...body }: CreateBillingDto) {
+  create({ userId, customerId, dueDate, ...body }: CreateBillingDto) {
     return this.billingRepository.create({
       data: {
         User: { connect: { id: userId } },
         Customer: { connect: { id: customerId } },
         status: BillingStatus.PENDING,
+        dueDate: DateTime.fromISO(dueDate, { zone: 'utc' }).toJSDate(),
         ...body,
       },
     });

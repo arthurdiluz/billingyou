@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  BadRequestException,
   NotFoundException,
   ParseUUIDPipe,
   Query,
@@ -29,8 +28,8 @@ export class UserController {
   async create(@Body() body: CreateUserDto) {
     try {
       return await this.userService.create(body);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
@@ -38,41 +37,46 @@ export class UserController {
   async find(@Query() query: FindUsersDto) {
     try {
       return await this.userService.find(query);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
   @Get(':id')
-  async findById(@Param('id', new ParseUUIDPipe()) id: string) {
+  async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     try {
-      return await this.userService.findById(id);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+      const user = await this.userService.findById(id);
+
+      if (!user) throw new NotFoundException(`User ID "${id}" not found`);
+      delete user.password;
+
+      return user;
+    } catch (Error) {
+      throw Error;
     }
   }
 
   @Patch(':id')
   async update(
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() body: UpdateUserDto,
   ) {
     try {
       const user = await this.userService.findById(id);
 
-      if (!user) {
-        throw new NotFoundException(`User ID "${id}" not found`);
-      }
+      if (!user) throw new NotFoundException(`User ID "${id}" not found`);
 
       return await this.userService.update(id, body);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
-  async deleteById(@Param('id', new ParseUUIDPipe()) id: string) {
+  async deleteById(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
     try {
       const user = await this.userService.findById(id);
 
@@ -80,8 +84,8 @@ export class UserController {
       if (user?.deletedAt) throw new ConflictException('User already deleted');
 
       return await this.userService.softDelete(id);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 }

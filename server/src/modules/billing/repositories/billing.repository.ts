@@ -14,8 +14,8 @@ export class BillingRepository {
     return this.prismaService.billing.findMany(args);
   }
 
-  public findUnique(args: Prisma.UserFindUniqueOrThrowArgs) {
-    return this.prismaService.billing.findUniqueOrThrow(args);
+  public findUnique(args: Prisma.UserFindUniqueArgs) {
+    return this.prismaService.billing.findUnique(args);
   }
 
   public update(args: Prisma.BillingUpdateArgs) {

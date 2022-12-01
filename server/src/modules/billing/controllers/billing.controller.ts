@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -16,6 +15,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CustomerService } from 'src/modules/customer/services/customer.service';
+import { UserService } from 'src/modules/user/services/user.service';
 import { CreateBillingDto } from '../dtos/create-billing.dto';
 import { FindBillingDto } from '../dtos/find-billing.dto';
 import { UpdateBillingDto } from '../dtos/update-billing.dto';
@@ -24,23 +25,48 @@ import { BillingService } from '../services/billing.service';
 @ApiTags('Billing')
 @Controller('api/billing')
 export class BillingController {
-  constructor(private readonly billingService: BillingService) {}
+  constructor(
+    private readonly billingService: BillingService,
+    private readonly customerService: CustomerService,
+    private readonly userService: UserService,
+  ) {}
 
   @Get('dashboard')
   async dashboard() {
     try {
       return await this.billingService.dashboard();
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
   @Post()
   async create(@Body() body: CreateBillingDto) {
     try {
+      const { userId, customerId } = body;
+
+      const user = await this.userService.findById(userId);
+      const customer = await this.customerService.findById(customerId);
+
+      if (!user) {
+        throw new NotFoundException(`User ID "${userId}" not found`);
+      }
+
+      if (user?.deletedAt) {
+        throw new ConflictException('User already deleted');
+      }
+
+      if (!customer) {
+        throw new NotFoundException(`Customer ID "${customerId}" not found`);
+      }
+
+      if (customer?.deletedAt) {
+        throw new ConflictException('Customer already deleted');
+      }
+
       return await this.billingService.create(body);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
@@ -48,17 +74,23 @@ export class BillingController {
   async find(@Query() query: FindBillingDto) {
     try {
       return await this.billingService.find(query);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
   @Get(':id')
   async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     try {
-      return await this.billingService.findById(id);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+      const billing = await this.billingService.findById(id);
+
+      if (!billing) {
+        throw new NotFoundException(`Billing ID "${id}" not found`);
+      }
+
+      return billing;
+    } catch (Error) {
+      throw Error;
     }
   }
 
@@ -79,8 +111,8 @@ export class BillingController {
       }
 
       return await this.billingService.update(id, body);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 
@@ -101,8 +133,8 @@ export class BillingController {
       }
 
       return await this.billingService.softDelete(id);
-    } catch (error) {
-      throw new BadRequestException(error?.message);
+    } catch (Error) {
+      throw Error;
     }
   }
 }
