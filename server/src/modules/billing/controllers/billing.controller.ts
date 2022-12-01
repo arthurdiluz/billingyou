@@ -13,7 +13,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { CustomerService } from 'src/modules/customer/services/customer.service';
 import { UserService } from 'src/modules/user/services/user.service';
@@ -31,6 +33,7 @@ export class BillingController {
     private readonly userService: UserService,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('dashboard')
   async dashboard() {
     try {
@@ -40,6 +43,7 @@ export class BillingController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Body() body: CreateBillingDto) {
     try {
@@ -70,6 +74,7 @@ export class BillingController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   async find(@Query() query: FindBillingDto) {
     try {
@@ -79,6 +84,7 @@ export class BillingController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     try {
@@ -94,6 +100,7 @@ export class BillingController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
@@ -116,6 +123,7 @@ export class BillingController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async deleteById(

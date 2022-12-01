@@ -12,7 +12,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from 'src/modules/user/services/user.service';
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
@@ -28,6 +30,7 @@ export class CustomerController {
     private readonly userService: UserService,
   ) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Body() body: CreateCustomerDto) {
     const { userId } = body;
@@ -43,6 +46,7 @@ export class CustomerController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   async find(@Query() query: FindCustomerDto) {
     try {
@@ -52,6 +56,7 @@ export class CustomerController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     try {
@@ -67,6 +72,7 @@ export class CustomerController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
@@ -85,6 +91,7 @@ export class CustomerController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async deleteById(

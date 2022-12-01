@@ -12,12 +12,14 @@ import {
   HttpCode,
   HttpStatus,
   ConflictException,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from '../services/user.service';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FindUsersDto } from '../dtos/find-user.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('User')
 @Controller('api/user')
@@ -33,6 +35,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   async find(@Query() query: FindUsersDto) {
     try {
@@ -42,6 +45,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   async findById(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     try {
@@ -56,6 +60,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   async update(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
@@ -72,6 +77,7 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async deleteById(
