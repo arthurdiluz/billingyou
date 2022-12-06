@@ -21,11 +21,11 @@ export function Button({
       className={classNames(
         "font-semibold rounded-md transition-all outline-none",
         {
-          "text-white bg-brand-primary-300 hover:bg-brand-primary-400 focus:bg-brand-primary-400 focus:ring-1 ring-brand-primary-400 active:bg-brand-primary-400":
+          "text-white bg-brand-primary-300 hover:bg-brand-primary-400 focus:bg-brand-primary-500 focus:ring-1 ring-brand-primary-400 active:bg-brand-primary-400":
             variant === "primary",
         },
         {
-          "hover:underline bg-transparent hover:text-brand-primary-400 text-brand-primary-300 focus:text-brand-primary-400 focus:ring-1 ring-brand-primary-400":
+          "hover:underline bg-transparent hover:text-brand-primary-400 text-brand-primary-300 focus:text-brand-primary-500 focus:ring-1 ring-brand-primary-400":
             variant === "link",
         },
         {

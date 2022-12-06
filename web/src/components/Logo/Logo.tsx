@@ -1,5 +1,13 @@
-export function Logo() {
+type Props = {
+  width?: string | number;
+  height?: string | number;
+};
+
+export function Logo({ width = 250, height = 50 }: Props) {
   return (
-    <div className="w-[250px] h-[50px] bg-logo bg-no-repeat bg-center bg-contain" />
+    <div
+      style={{ width, height }}
+      className="bg-logo bg-no-repeat bg-center bg-contain"
+    />
   );
 }
