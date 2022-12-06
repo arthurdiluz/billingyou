@@ -20,7 +20,7 @@ module.exports = {
         "feedback-info": "#5dd2fe",
       },
       backgroundImage: {
-        logo: "url(./public/img/billingyou-logo.svg)",
+        logo: "url(./src/images/billingyou-logo.svg)",
       },
     },
   },
