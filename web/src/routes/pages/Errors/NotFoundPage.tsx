@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Logo } from "../../../../components";
+import { Logo } from "../../../components";
 
 export function NotFoundPage() {
   const { pathname } = useLocation();
