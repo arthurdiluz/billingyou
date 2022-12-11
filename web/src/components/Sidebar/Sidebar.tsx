@@ -27,10 +27,10 @@ export function Sidebar() {
             Charges
           </SidebarItem>
         </Link>
-        <Link to="/clients">
+        <Link to="/customers">
           <SidebarItem>
             <MdPersonOutline fontSize="24px" />
-            Clients
+            Customers
           </SidebarItem>
         </Link>
         <Link to="/about">
