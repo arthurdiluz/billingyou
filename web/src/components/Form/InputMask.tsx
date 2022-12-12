@@ -1,6 +1,6 @@
 import ReactInputMask from "react-input-mask";
 import classNames from "classnames";
-import { InputErrorMessage } from "./InputErrorMessage";
+import InputErrorMessage from "./InputErrorMessage";
 
 enum MaskTypesEnum {
   CPF_CNPJ = "cpfCnpj",

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { InputErrorMessage } from './InputErrorMessage';
+import InputErrorMessage from "./InputErrorMessage";
 
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,

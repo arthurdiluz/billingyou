@@ -5,8 +5,7 @@ import {
   MdOutlineSupervisorAccount,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { SidebarItem } from "./SidebarItem";
-import { Logo } from "../Logo";
+import SidebarItem from "./SidebarItem";
 
 export default function Sidebar() {
   return (
