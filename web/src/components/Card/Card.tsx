@@ -6,7 +6,7 @@ type Props = {
   value: string | number;
 };
 
-export function Card({ Icon, label, value }: Props) {
+export default function Card({ Icon, label, value }: Props) {
   return (
     <Container className="w-full p-8">
       <p className="flex items-center text-gray-400 text-sm">

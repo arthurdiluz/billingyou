@@ -1,22 +1,20 @@
+import Button from "@components/Button/Button";
+import Container from "@components/Container/Container";
+import Input from "@components/Form/Input";
+import InputMask from "@components/Form/InputMask";
+import SidebarLayout from "@components/Layout/SidebarLayout";
+import PageTitle from "@components/PageTitle/PageTitle";
+import ICustomer from "@interfaces/ICustomer";
+import { CustomerService } from "@services/CustomerService";
+import { CustomerAddResolver } from "@validations/Customer";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import {
-  Button,
-  Container,
-  Input,
-  InputMask,
-  PageTitle,
-  SidebarLayout,
-} from "../../../components";
-import { ICustomer } from "../../../interfaces";
-import { CustomerAddResolver } from "../../../validations";
-import { CustomerService } from "../../../services/CustomerService";
+import toast from "react-hot-toast";
 
 type ICustomersEditForm = Omit<ICustomer, "id">;
 
-export function CustomersEditPage() {
+export default function CustomersEditPage() {
   const {
     control,
     formState: { errors },

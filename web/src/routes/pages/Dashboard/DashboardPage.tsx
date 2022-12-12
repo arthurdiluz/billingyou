@@ -1,9 +1,10 @@
+import Card from "@components/Card/Card";
+import SidebarLayout from "@components/Layout/SidebarLayout";
+import PageTitle from "@components/PageTitle/PageTitle";
+import { NumberToCurrency } from "@helpers/CurrencyHelper";
 import { MdOutlineAttachMoney, MdPersonOutline } from "react-icons/md";
-import { Card, PageTitle, Sidebar } from "../../../components";
-import { SidebarLayout } from "../../../components/Layout";
-import { CurrencyHelper } from "../../../helpers";
 
-export function DashboardPage() {
+export default function DashboardPage() {
   return (
     <SidebarLayout>
       <PageTitle title="Dashboard" />
@@ -11,12 +12,12 @@ export function DashboardPage() {
         <Card
           Icon={<MdOutlineAttachMoney />}
           label="Profit"
-          value={CurrencyHelper.NumberToCurrency(1200, "USD")}
+          value={NumberToCurrency(1200, "USD")}
         />
         <Card
           Icon={<MdOutlineAttachMoney />}
           label="Late"
-          value={CurrencyHelper.NumberToCurrency(200, "USD")}
+          value={NumberToCurrency(200, "USD")}
         />
         <Card Icon={<MdPersonOutline />} label="Customers" value={10} />
       </div>

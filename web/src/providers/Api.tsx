@@ -5,6 +5,6 @@ const baseURL =
 
 export const Api = axios.create({ baseURL });
 
-export function setBearerToken(bearerToken: string) {
+export default function setBearerToken(bearerToken: string) {
   Api.defaults.headers.common["Authorization"] = `Bearer ${bearerToken}`;
 }

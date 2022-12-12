@@ -3,7 +3,7 @@ type Props = {
   errors?: any;
 };
 
-export function InputErrorMessage({ name, errors }: Props) {
+export default function InputErrorMessage({ name, errors }: Props) {
   if (!name || !errors) return null;
 
   let error: any = errors || {};

@@ -1,8 +1,10 @@
+import Button from "@components/Button/Button";
+import SidebarLayout from "@components/Layout/SidebarLayout";
+import PageTitle from "@components/PageTitle/PageTitle";
+import Table from "@components/Table/Table";
 import { Link } from "react-router-dom";
-import { Button, PageTitle, Table } from "../../../components";
-import { SidebarLayout } from "../../../components/Layout";
 
-export function CustomersPage() {
+export default function CustomersPage() {
   return (
     <SidebarLayout>
       <PageTitle

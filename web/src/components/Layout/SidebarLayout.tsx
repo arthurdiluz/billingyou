@@ -4,7 +4,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export function SidebarLayout({ children }: Props) {
+export default function SidebarLayout({ children }: Props) {
   return (
     <div className="w-full min-h-screen bg-gray-200">
       <Sidebar />

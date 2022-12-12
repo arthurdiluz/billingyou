@@ -18,7 +18,7 @@ type Props = {
   errors?: any;
 };
 
-export function InputMask({
+export default function InputMask({
   name,
   mask,
   className,

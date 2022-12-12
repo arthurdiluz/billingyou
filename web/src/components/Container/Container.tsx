@@ -5,7 +5,7 @@ type Props = {
   className?: string;
 };
 
-export function Container({ children, className }: Props) {
+export default function Container({ children, className }: Props) {
   return (
     <div className={classNames("bg-white rounded-md shadow-lg p-4", className)}>
       {children}

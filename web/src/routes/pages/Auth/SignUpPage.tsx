@@ -1,7 +1,9 @@
+import Button from "@components/Button/Button";
+import Container from "@components/Container/Container";
+import Input from "@components/Form/Input";
 import { Link } from "react-router-dom";
-import { Button, Container, Input, Logo } from "../../../components";
 
-export function SignUpPage() {
+export default function SignUpPage() {
   return (
     <div className="w-screen h-screen bg-gray-200 flex flex-col items-center justify-center">
       {/* <div className="py-10">

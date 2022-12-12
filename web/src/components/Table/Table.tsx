@@ -6,7 +6,7 @@ type Props = {
   onClick?: (item: any, index: number) => void;
 };
 
-export function Table({ headers, data, onClick }: Props) {
+export default function Table({ headers, data, onClick }: Props) {
   return (
     <table className="w-full">
       <thead className="border-b-2 border-gray-300">

@@ -1,14 +1,12 @@
 import { useLocation } from "react-router-dom";
-import { Logo } from "../../../components";
+import Logo from "@components/Logo/Logo";
 
-export function NotFoundPage() {
+export default function NotFoundPage() {
   const { pathname } = useLocation();
 
   return (
     <div className="w-screen h-screen bg-gray-200 flex flex-col items-center justify-center">
-      {/* <div className="py-10">
-        <Logo />
-      </div> */}
+      <div className="py-10">{/* <Logo /> */}</div>
       <h1 className="text-3xl text-gray-600 text-center py-4">
         Page not found {":("}
       </h1>

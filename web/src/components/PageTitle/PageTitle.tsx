@@ -3,7 +3,7 @@ type Props = {
   buttons?: React.ReactNode[];
 };
 
-export function PageTitle({ title, buttons }: Props) {
+export default function PageTitle({ title, buttons }: Props) {
   return (
     <div className="w-full min-h-[80px] flex items-center justify-between">
       <h1 className="text-xl font-semibold text-gray-700">{title}</h1>

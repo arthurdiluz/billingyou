@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { SidebarItem } from "./SidebarItem";
 import { Logo } from "../Logo";
 
-export function Sidebar() {
+export default function Sidebar() {
   return (
     <aside className="fixed top-0 left-0 w-[350px] h-full bg-white shadow-lg flex flex-col items-center justify-start p-10">
       {/* <Link to="/">

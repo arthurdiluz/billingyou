@@ -3,7 +3,7 @@ import { AuthenticatedRoutes } from "./authenticatedRoutes";
 import { UnauthenticatedRoutes } from "./unauthenticatedRoutes";
 
 export function AppRoutes() {
-  const isAuthenticated: boolean = false;
+  const isAuthenticated: boolean = true;
 
   return (
     <RouterProvider

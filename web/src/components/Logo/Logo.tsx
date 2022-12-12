@@ -3,7 +3,7 @@ type Props = {
   height?: string | number;
 };
 
-export function Logo({ width = 250, height = 50 }: Props) {
+export default function Logo({ width = 250, height = 50 }: Props) {
   return (
     <div
       style={{ width, height }}

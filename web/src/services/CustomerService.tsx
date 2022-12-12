@@ -1,4 +1,4 @@
-import { ICustomer } from "../interfaces";
+import ICustomer from "@interfaces/ICustomer";
 import { Api } from "../providers/Api";
 
 function create(data: Omit<ICustomer, "id">) {

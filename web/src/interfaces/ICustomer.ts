@@ -1,4 +1,4 @@
-export interface ICustomer {
+export default interface ICustomer {
   id: string;
   name: string;
   cpfCnpj: string;

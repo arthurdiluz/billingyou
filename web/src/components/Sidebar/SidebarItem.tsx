@@ -5,7 +5,7 @@ type Props = {
   isSelected?: boolean;
 };
 
-export function SidebarItem({ children, isSelected = false }: Props) {
+export default function SidebarItem({ children, isSelected = false }: Props) {
   return (
     <button
       className={classNames(
