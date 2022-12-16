@@ -8,9 +8,10 @@ import {
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   const port = process.env?.HTTP_PORT || 3333;
 
+  app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true, // set type to data after DTO
