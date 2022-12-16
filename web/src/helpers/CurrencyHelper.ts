@@ -7,10 +7,7 @@ type Currency = "USD" | "BRL" | undefined;
  * @returns Number formatted in a curreny
  */
 
-export function NumberToCurrency(
-  value: number,
-  currency: Currency = "USD"
-): string {
+function NumberToCurrency(value: number, currency: Currency = "USD"): string {
   const language: string = currency === "USD" ? "en-US" : "pt-BR";
   return Intl.NumberFormat(language, {
     style: "currency",
@@ -24,7 +21,7 @@ export function NumberToCurrency(
  * @returns Raw number
  */
 
-export function usdToNumber(usd: string): Number {
+function usdToNumber(usd: string): Number {
   return Number(usd.replace(/\,/, "").replace("$", ""));
 }
 
@@ -33,6 +30,12 @@ export function usdToNumber(usd: string): Number {
  * @param brl Currency value
  * @returns Raw number
  */
-export function brlToNumber(brl: string): Number {
+function brlToNumber(brl: string): Number {
   return Number(brl.replace(/\./, "").replace(/\,/, ".").replace("R$", ""));
 }
+
+export const CurrencyHelper = {
+  NumberToCurrency,
+  usdToNumber,
+  brlToNumber,
+};
