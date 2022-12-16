@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import { useAuthContext } from "@contexts/AuthContext";
-import { AuthenticatedRoutes } from "./authenticatedRoutes";
-import { UnauthenticatedRoutes } from "./unauthenticatedRoutes";
+import { AuthenticatedRoutes } from "@routes/authenticatedRoutes";
+import { UnauthenticatedRoutes } from "@routes/unauthenticatedRoutes";
 
 export function AppRoutes() {
   const { token, user } = useAuthContext();
