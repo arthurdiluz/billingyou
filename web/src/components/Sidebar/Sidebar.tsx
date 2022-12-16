@@ -20,10 +20,10 @@ export default function Sidebar() {
             Dashboard
           </SidebarItem>
         </Link>
-        <Link to="/charges">
+        <Link to="/billings">
           <SidebarItem>
             <MdOutlineAttachMoney fontSize="24px" />
-            Charges
+            Billings
           </SidebarItem>
         </Link>
         <Link to="/customers">
