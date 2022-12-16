@@ -1,35 +1,100 @@
+import { Link } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import { useAuthContext } from "@contexts/AuthContext";
+import { SignInResolver } from "@validations/SignIn";
 import Button from "@components/Button/Button";
 import Container from "@components/Container/Container";
 import Input from "@components/Form/Input";
-import { Link } from "react-router-dom";
+import Logo from "@components/Logo/Logo";
+import { useState } from "react";
+import { Alert, AlertEnum } from "@components/Alert/Alert";
+
+type ISignInForm = {
+  email: string;
+  password: string;
+};
 
 export default function SignInPage() {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm<ISignInForm>({ resolver: SignInResolver });
+  const { signIn } = useAuthContext();
+  const [alert, setAlert] = useState<
+    { type: AlertEnum; message: string } | undefined
+  >();
+
+  async function onSubmit({ email, password }: ISignInForm) {
+    try {
+      setAlert(undefined);
+
+      await signIn(email, password);
+
+      setAlert({
+        type: AlertEnum.SUCCESS,
+        message: "Cadastro efetuado com sucesso!",
+      });
+
+      reset({ email: "", password: "" });
+    } catch (error) {
+      setAlert({
+        type: AlertEnum.ERROR,
+        message: "Invalid credentials. Try again.",
+      });
+    }
+  }
+
   return (
     <div className="w-screen h-screen bg-gray-200 flex flex-col items-center justify-center">
-      {/* <div className="py-10">
+      <div className="py-10">
         <Logo />
-      </div> */}
-      <Container className="min-w-fit w-4/12 max-w-full flex flex-col items-center justify-center py-8">
-        <h1 className="text-2xl font-bold text-gray-600 text-center">
+      </div>
+      <Container className="w-full max-w-[500px] flex flex-col items-center justify-center p-10">
+        <h1 className="text-2xl font-bold text-gray-700 text-center mt-2">
           Access your account
         </h1>
-        <p className="text-sm text-gray-500 text-center mb-5">
+        {alert && <Alert type={alert.type}>{alert.message}</Alert>}
+        <p className="text-sm text-gray-600 text-center mb-8">
           Manage your finances
         </p>
-        <Input type="email" placeholder="Your email" className="w-full mb-2" />
-        <Input
-          type="password"
-          placeholder="Your password"
-          className="w-full mb-2"
-        />
-        <Button className="w-full mt-4">Sign in</Button>
-        <p className="text-sm font-bold text-gray-500 text-center mt-6 py-1">
-          Do not have an account?
+        <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                errors={errors}
+                className="w-full mb-2"
+                type="email"
+                placeholder="E-mail"
+              />
+            )}
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                errors={errors}
+                className="w-full mb-2"
+                type="password"
+                placeholder="Password"
+              />
+            )}
+          />
+          <Button type="submit" className="w-full">
+            Sign in
+          </Button>
+        </form>
+        <p className="text-sm text-gray-600 text-center mt-5 py-2">
+          Still don't have an account?
         </p>
         <Link to="/signup">
-          <Button className="w-full m-auto" variant="link">
-            Sign up
-          </Button>
+          <Button variant="link">Sign up</Button>
         </Link>
       </Container>
     </div>

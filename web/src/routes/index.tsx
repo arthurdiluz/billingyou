@@ -1,13 +1,15 @@
 import { RouterProvider } from "react-router-dom";
+import { useAuthContext } from "@contexts/AuthContext";
 import { AuthenticatedRoutes } from "./authenticatedRoutes";
 import { UnauthenticatedRoutes } from "./unauthenticatedRoutes";
 
 export function AppRoutes() {
-  const isAuthenticated: boolean = true;
+  const { token, user } = useAuthContext();
+  const isAuth = !!token && !!user;
 
   return (
     <RouterProvider
-      router={isAuthenticated ? AuthenticatedRoutes : UnauthenticatedRoutes}
-    ></RouterProvider>
+      router={isAuth ? AuthenticatedRoutes : UnauthenticatedRoutes}
+    />
   );
 }

@@ -11,7 +11,8 @@ export default function NotFoundPage() {
         Page not found {":("}
       </h1>
       <p className="text-gray-500 text-center">
-        Requested page with path '{pathname}' does not exist
+        The requested page with path '{pathname}' either doesn't exist or you do
+        not have access to it
       </p>
     </div>
   );

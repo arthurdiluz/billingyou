@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 
 type ICustomersAddForm = Omit<ICustomer, "id">;
 
-export default function CustomersAddPage() {
+export default function CustomerAddPage() {
   const {
     control,
     formState: { errors },

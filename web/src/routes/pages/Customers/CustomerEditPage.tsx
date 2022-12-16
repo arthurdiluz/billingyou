@@ -11,10 +11,11 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
 
 type ICustomersEditForm = Omit<ICustomer, "id">;
 
-export default function CustomersEditPage() {
+export default function CustomerEditPage() {
   const {
     control,
     formState: { errors },
@@ -28,7 +29,7 @@ export default function CustomersEditPage() {
 
     try {
       const { status } = await CustomerService.update(id, values);
-      if (status === 200) {
+      if (status === HttpStatusCode.Ok) {
         toast.success("Client info updated successfully!");
       }
     } catch (error: any) {
@@ -40,7 +41,7 @@ export default function CustomersEditPage() {
     async function fetchData() {
       if (!id) return;
       const { status, data } = await CustomerService.findById(id);
-      if (status === 200) {
+      if (status === HttpStatusCode.Ok) {
         reset(data);
       }
     }
