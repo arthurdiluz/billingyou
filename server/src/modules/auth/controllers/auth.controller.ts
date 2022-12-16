@@ -17,16 +17,16 @@ import IUser from 'src/modules/user/interfaces/user.interface';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('local/login')
+  @Post('signin')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('local'))
-  async localAuth(@Request() req: any) {
+  async signIn(@Request() req: any) {
     try {
       const user: IUser = req?.user || undefined;
 
       if (!user) throw new BadRequestException(`User not loaded`);
 
-      return this.authService.LoginLocal(user);
+      return this.authService.signIn(user);
     } catch (error) {
       throw error;
     }

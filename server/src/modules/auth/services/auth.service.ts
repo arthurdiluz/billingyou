@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async LoginLocal(user: IUser) {
+  async signIn(user: IUser) {
     const token = this.jwtService.sign(user);
     const expiresIn = Utils.getExpirationDateFromToken(token);
 
