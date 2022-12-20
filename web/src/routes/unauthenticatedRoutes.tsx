@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
-import SignInPage from "../pages/Auth/SignInPage";
-import SignUpPage from "../pages/Auth/SignUpPage";
-import NotFoundPage from "../pages/Errors/NotFoundPage";
+import SignInPage from "@pages/Auth/SignInPage";
+import SignUpPage from "@pages/Auth/SignUpPage";
+import AboutPage from "@pages/About/AboutPage";
+import NotFoundPage from "@pages/Errors/NotFoundPage";
 
 export const UnauthenticatedRoutes = createBrowserRouter([
   {
@@ -17,6 +18,11 @@ export const UnauthenticatedRoutes = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUpPage />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
     errorElement: <NotFoundPage />,
   },
 ]);

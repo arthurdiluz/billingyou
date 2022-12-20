@@ -31,12 +31,12 @@ export default function SignUpPage() {
   async function onSubmit(values: ISignUpForm) {
     try {
       setAlert(undefined);
-      
+
       await signUp(values);
 
       setAlert({
         type: AlertEnum.SUCCESS,
-        message: "Cadastro efetuado com sucesso!",
+        message: "You've been registered successfully",
       });
 
       reset({ firstName: "", lastName: "", email: "", password: "" });
@@ -50,9 +50,9 @@ export default function SignUpPage() {
 
   return (
     <div className="w-screen h-screen bg-gray-200 flex flex-col items-center justify-center">
-      {/* <div className="py-10">
+      <div className="py-10">
         <Logo />
-      </div> */}
+      </div>
       <Container className="w-full max-w-[500px] flex flex-col items-center justify-center p-10">
         <h1 className="text-2xl font-bold text-gray-700 text-center mt-2 mb-8">
           Create your account

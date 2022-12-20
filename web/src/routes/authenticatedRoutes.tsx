@@ -1,12 +1,13 @@
+import AboutPage from "@pages/About/AboutPage";
+import BillingAddPage from "@pages/Billings/BillingAddPage";
+import BillingEditPage from "@pages/Billings/BillingEditPage";
+import BillingsPage from "@pages/Billings/BillingsPage";
+import CustomerAddPage from "@pages/Customers/CustomerAddPage";
+import CustomerEditPage from "@pages/Customers/CustomerEditPage";
+import CustomersPage from "@pages/Customers/CustomersPage";
+import DashboardPage from "@pages/Dashboard/DashboardPage";
+import NotFoundPage from "@pages/Errors/NotFoundPage";
 import { createBrowserRouter } from "react-router-dom";
-import BillingAddPage from "../pages/Billings/BillingAddPage";
-import BillingEditPage from "../pages/Billings/BillingEditPage";
-import BillingsPage from "../pages/Billings/BillingsPage";
-import CustomerAddPage from "../pages/Customers/CustomerAddPage";
-import CustomerEditPage from "../pages/Customers/CustomerEditPage";
-import CustomersPage from "../pages/Customers/CustomersPage";
-import DashboardPage from "../pages/Dashboard/DashboardPage";
-import NotFoundPage from "../pages/Errors/NotFoundPage";
 
 export const AuthenticatedRoutes = createBrowserRouter([
   {
@@ -47,6 +48,11 @@ export const AuthenticatedRoutes = createBrowserRouter([
   {
     path: "/billing/update",
     element: <BillingEditPage />,
+    errorElement: <NotFoundPage />,
+  },
+  {
+    path: "/about",
+    element: <AboutPage />,
     errorElement: <NotFoundPage />,
   },
 ]);

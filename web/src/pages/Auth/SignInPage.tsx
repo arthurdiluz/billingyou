@@ -32,11 +32,6 @@ export default function SignInPage() {
 
       await signIn(email, password);
 
-      setAlert({
-        type: AlertEnum.SUCCESS,
-        message: "Cadastro efetuado com sucesso!",
-      });
-
       reset({ email: "", password: "" });
     } catch (error) {
       setAlert({
