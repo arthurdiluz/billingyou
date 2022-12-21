@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import Button from "@components/Button/Button";
 import Container from "@components/Container/Container";
 import Input from "@components/Form/Input";
@@ -7,10 +11,6 @@ import PageTitle from "@components/PageTitle/PageTitle";
 import ICustomer from "@interfaces/ICustomer";
 import { CustomerService } from "@services/CustomerService";
 import { CustomerAddResolver } from "@validations/Customer";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import toast from "react-hot-toast";
 import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
 
 type ICustomersEditForm = Omit<ICustomer, "id">;
@@ -29,8 +29,9 @@ export default function CustomerEditPage() {
 
     try {
       const { status } = await CustomerService.update(id, values);
+
       if (status === HttpStatusCode.Ok) {
-        toast.success("Client info updated successfully!");
+        toast.success("Customer updated successfully");
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -40,7 +41,9 @@ export default function CustomerEditPage() {
   useEffect(() => {
     async function fetchData() {
       if (!id) return;
+
       const { status, data } = await CustomerService.findById(id);
+
       if (status === HttpStatusCode.Ok) {
         reset(data);
       }
@@ -104,7 +107,7 @@ export default function CustomerEditPage() {
               <InputMask
                 {...field}
                 mask="(99) 99999-9999"
-                placeholder="Phone"
+                placeholder="Phone number"
                 className="w-full"
                 errors={errors}
               />

@@ -5,11 +5,11 @@ import InputMask from "@components/Form/InputMask";
 import SidebarLayout from "@components/Layout/SidebarLayout";
 import PageTitle from "@components/PageTitle/PageTitle";
 import ICustomer from "@interfaces/ICustomer";
+import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
 import { CustomerService } from "@services/CustomerService";
 import { CustomerAddResolver } from "@validations/Customer";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-
 type ICustomersAddForm = Omit<ICustomer, "id">;
 
 export default function CustomerAddPage() {
@@ -24,8 +24,8 @@ export default function CustomerAddPage() {
     try {
       const { status } = await CustomerService.create(values);
 
-      if (status === 201) {
-        toast.success("Client registered successfully!");
+      if (status === HttpStatusCode.Created) {
+        toast.success("Customer registered successfully");
         reset({ name: "", cpfCnpj: "", email: "", phone: "" });
       }
     } catch (error: any) {
@@ -35,11 +35,11 @@ export default function CustomerAddPage() {
 
   return (
     <SidebarLayout>
-      <PageTitle title="Create new client" />
+      <PageTitle title="Add new customer" />
       <Container className="p-10 max-w-full">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full max-w-full flex flex-col items-start justify-start gap-4"
+          className="w-full max-w-full flex flex-col items-center justify-start gap-4"
         >
           <div className="w-full flex items-start gap-2">
             <Controller
@@ -88,14 +88,14 @@ export default function CustomerAddPage() {
               <InputMask
                 {...field}
                 mask="(99) 99999-9999"
-                placeholder="Phone"
+                placeholder="Phone number"
                 className="w-full"
                 errors={errors}
               />
             )}
           />
-          <Button className="w-full my-4" type="submit">
-            Salvar
+          <Button type="submit" className="w-full my-4">
+            Save
           </Button>
         </form>
       </Container>

@@ -1,3 +1,4 @@
+import { createBrowserRouter } from "react-router-dom";
 import AboutPage from "@pages/About/AboutPage";
 import BillingAddPage from "@pages/Billings/BillingAddPage";
 import BillingEditPage from "@pages/Billings/BillingEditPage";
@@ -7,7 +8,6 @@ import CustomerEditPage from "@pages/Customers/CustomerEditPage";
 import CustomersPage from "@pages/Customers/CustomersPage";
 import DashboardPage from "@pages/Dashboard/DashboardPage";
 import NotFoundPage from "@pages/Errors/NotFoundPage";
-import { createBrowserRouter } from "react-router-dom";
 
 export const AuthenticatedRoutes = createBrowserRouter([
   {
