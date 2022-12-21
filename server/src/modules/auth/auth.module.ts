@@ -15,7 +15,7 @@ import { LocalStrategy } from './strategies/local.strategy';
     ConfigModule.forRoot(), // read .env
     JwtModule.register({
       privateKey: process.env['JWT_SECRET'],
-      signOptions: { expiresIn: '1h' },
+      signOptions: { expiresIn: '1d' },
     }),
     PassportModule,
     UserModule,
