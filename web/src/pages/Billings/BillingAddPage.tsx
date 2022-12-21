@@ -13,6 +13,7 @@ import { Billing } from "@shared/Billing";
 import { IBillingForm } from "@interfaces/IBilling";
 import { BillingService } from "@services/BillingService";
 import { BillingResolver } from "@validations/Billing";
+import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
 
 export default function BillingAddPage() {
   const {
@@ -29,7 +30,7 @@ export default function BillingAddPage() {
         Billing.formToPayload(values)
       );
 
-      if (status === 201) {
+      if (status === HttpStatusCode.Created) {
         toast.success("Billing created successfully");
 
         reset({

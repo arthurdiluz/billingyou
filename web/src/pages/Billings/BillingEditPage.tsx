@@ -13,6 +13,9 @@ import { Billing } from "@shared/Billing";
 import { IBillingForm } from "@interfaces/IBilling";
 import { BillingService } from "@services/BillingService";
 import { BillingResolver } from "@validations/Billing";
+import { useParams } from "react-router-dom";
+import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
+import { DateHelper } from "@helpers/DateHelper";
 
 export default function BillingEditPage() {
   const {
@@ -21,15 +24,19 @@ export default function BillingEditPage() {
     handleSubmit,
     reset,
   } = useForm<IBillingForm>({ resolver: BillingResolver });
+  const { id } = useParams<{ id: string }>();
   const { customersList, findCustomers } = useCustomer();
 
   async function onSubmit(values: IBillingForm) {
     try {
-      const { status } = await BillingService.create(
+      if (!id) return;
+
+      const { status } = await BillingService.update(
+        id,
         Billing.formToPayload(values)
       );
 
-      if (status === 201) {
+      if (status === HttpStatusCode.Ok) {
         toast.success("Billing updated successfully");
 
         reset({
@@ -45,12 +52,29 @@ export default function BillingEditPage() {
   }
 
   useEffect(() => {
+    async function fetchData() {
+      if (!id) return;
+
+      const { status, data } = await BillingService.findById(id);
+
+      if (status === HttpStatusCode.Ok) {
+        reset({
+          description: data.description,
+          dueDate: DateHelper.fromIsoToUtc(data.dueDate, "yyyy-MM-dd"),
+          status: data.status,
+          value: data.value,
+          customerId: { label: data.customer.name, value: data.customer.id },
+        });
+      }
+    }
+
+    fetchData();
     findCustomers();
   }, []);
 
   return (
     <SidebarLayout>
-      <PageTitle title="Edit billing" />
+      <PageTitle title="Update billings" />
       <Container className="p-10">
         <form
           onSubmit={handleSubmit(onSubmit)}

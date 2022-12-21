@@ -1,10 +1,37 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@components/Button/Button";
-import SidebarLayout from "@components/Layout/SidebarLayout";
+import Container from "@components/Container/Container";
 import PageTitle from "@components/PageTitle/PageTitle";
+import SidebarLayout from "@components/Layout/SidebarLayout";
 import Table from "@components/Table/Table";
-import { Link } from "react-router-dom";
+import { BillingService } from "@services/BillingService";
+import { Billing } from "@shared/Billing";
+import { IBilling } from "@interfaces/IBilling";
+import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
+
+type IBillingTable = IBilling & { customerName: string };
 
 export default function BillingsPage() {
+  const navigate = useNavigate();
+  const [billings, setBillings] = useState<IBillingTable[]>([]);
+
+  function handleTableClick({ id }: any) {
+    navigate(`/billing/update/${id}`);
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      const { status, data } = await BillingService.find();
+
+      if (status === HttpStatusCode.Ok) {
+        setBillings(data.map(Billing.parsePayload));
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <SidebarLayout>
       <PageTitle
@@ -13,21 +40,21 @@ export default function BillingsPage() {
           <Link to="/billing/create">
             <Button>Add billing</Button>
           </Link>,
-          <Link to="/billing/update">
-            <Button variant="link">Options</Button>
-          </Link>,
         ]}
       />
-      <Table
-        headers={[
-          { key: "description", label: "Description" },
-          { key: "status", label: "Status" },
-          { key: "value", label: "Valor" },
-          { key: "dueDate", label: "Due date" },
-          { key: "customer", label: "Customer" },
-        ]}
-        data={[]} // TODO: make the query
-      />
+      <Container className="p-10">
+        <Table
+          onClick={handleTableClick}
+          headers={[
+            { key: "customerName", label: "Customer", width: 200 },
+            { key: "description", label: "Description" },
+            { key: "status", label: "Status", width: 100 },
+            { key: "value", label: "Value", width: 150 },
+            { key: "dueDate", label: "Due date", width: 200 },
+          ]}
+          data={billings}
+        />
+      </Container>
     </SidebarLayout>
   );
 }
