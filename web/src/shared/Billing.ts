@@ -1,24 +1,19 @@
+import { DateTime } from "luxon";
 import { CurrencyHelper } from "@helpers/CurrencyHelper";
 import { DateHelper } from "@helpers/DateHelper";
 import { IBilling, IBillingForm, ICreateBilling } from "@interfaces/IBilling";
-import { DateTime } from "luxon";
 
-function parseStatus(status: string) {
-  const reference: any = {
-    PENDING: "Pendente",
-    PAID: "Pago",
-    LATE: "Atrasado",
-  };
-
-  return reference[status];
-}
-
-function parsePayload(data: IBilling): IBilling & { customerName: string } {
+function parsePayload({
+  value,
+  status,
+  dueDate,
+  ...data
+}: IBilling): IBilling & { customerName: string } {
   return {
     ...data,
-    value: CurrencyHelper.NumberToCurrency(Number(data.value), `USD`),
-    status: parseStatus(data.status),
-    dueDate: DateHelper.fromIsoToUtc(data.dueDate),
+    value: CurrencyHelper.NumberToCurrency(Number(value), `USD`),
+    status: status?.toUpperCase(),
+    dueDate: DateHelper.fromIsoToUtc(dueDate),
     customerName: data.customer.name,
   };
 }

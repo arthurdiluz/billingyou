@@ -35,12 +35,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   async function signUp(payload: ISignUpPayload) {
     AuthService.signUp(payload)
       .then(({ status, data }) => {
-        if (status === 201) {
+        if (status === HttpStatusCode.Created) {
           setUser(data);
         }
       })
       .catch((error) => {
-        console.error(error);
+        throw new error();
       });
   }
 
