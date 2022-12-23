@@ -24,7 +24,7 @@ async function bootstrap() {
     .setTitle('BillingYou API')
     .setDescription('BillingYou API implementation')
     .setVersion('0.1')
-    //.addBearerAuth()
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   const customOptions: SwaggerCustomOptions = {
