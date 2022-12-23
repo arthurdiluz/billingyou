@@ -33,6 +33,8 @@ export class AuthController {
 
       if (!user) throw new BadRequestException(`User not loaded`);
 
+      user.password = undefined;
+
       return this.authService.signIn(user);
     } catch (error) {
       throw error;
