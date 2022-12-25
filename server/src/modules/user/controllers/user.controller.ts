@@ -28,6 +28,11 @@ export class UserController {
 
   @Post()
   async create(@Body() body: CreateUserDto) {
+    const { email } = body;
+    const user = await this.userService.findByEmail(email);
+
+    if (user) throw new ConflictException(`Email "${email}" already signed up`);
+
     try {
       return await this.userService.create(body);
     } catch (Error) {
