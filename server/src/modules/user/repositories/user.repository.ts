@@ -10,8 +10,18 @@ export class UserRepository {
     return this.prismaService.user.create(args);
   }
 
-  public findMany(args: Prisma.UserFindManyArgs) {
-    return this.prismaService.user.findMany(args);
+  public findMany({ where: _where, ...args }: Prisma.UserFindManyArgs) {
+    const { firstName, lastName, email, ...where } = _where;
+
+    return this.prismaService.user.findMany({
+      where: {
+        firstName: { startsWith: firstName as string },
+        lastName: { startsWith: lastName as string },
+        email: { startsWith: email as string },
+        ...where,
+      },
+      ...args,
+    });
   }
 
   public findUnique(args: Prisma.UserFindUniqueArgs) {

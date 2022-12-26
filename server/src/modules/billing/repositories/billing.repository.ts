@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { BillingStatus, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/database/prisma.service';
 
 @Injectable()
@@ -10,8 +10,19 @@ export class BillingRepository {
     return this.prismaService.billing.create(args);
   }
 
-  public findMany(args: Prisma.BillingFindManyArgs) {
-    return this.prismaService.billing.findMany(args);
+  public findMany({ where: _where, ...args }: Prisma.BillingFindManyArgs) {
+    const { description, value, dueDate, status, ...where } = _where;
+
+    return this.prismaService.billing.findMany({
+      where: {
+        description: { contains: description as string },
+        value: { equals: value as number },
+        dueDate: { equals: dueDate as string },
+        status: { equals: status as BillingStatus },
+        ...where,
+      },
+      ...args,
+    });
   }
 
   public findUnique(args: Prisma.UserFindUniqueArgs) {
