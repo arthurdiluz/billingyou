@@ -1,3 +1,4 @@
+import { Buffer } from "buffer";
 import { AppConfig } from "../config";
 
 function getKey(key: string) {
@@ -21,8 +22,18 @@ function removeItem(key: string) {
   localStorage.removeItem(key);
 }
 
+function getDurationFromToken(token: string): number {
+  const payload = JSON.parse(
+    Buffer.from(token.split(".")[1], "base64").toString()
+  );
+  const expiresIn = payload?.exp - payload?.iat;
+
+  return expiresIn * 1000;
+}
+
 export const StorageHelper = {
   getItem,
   setItem,
   removeItem,
+  getDurationFromToken,
 };

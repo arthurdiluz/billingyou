@@ -29,6 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(data.user);
       StorageHelper.setItem("user", data.user);
       StorageHelper.setItem("token", data.token);
+      setLogOutTimer(data.token);
     }
   }
 
@@ -42,6 +43,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .catch((error) => {
         throw new error();
       });
+  }
+
+  async function setLogOutTimer(token: string) {
+    const expiresIn = StorageHelper.getDurationFromToken(token);
+
+    setTimeout(() => {
+      StorageHelper.removeItem("token");
+      StorageHelper.removeItem("user");
+      setToken(undefined);
+    }, expiresIn);
   }
 
   useEffect(() => {
