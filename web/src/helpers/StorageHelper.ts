@@ -1,6 +1,18 @@
 import { Buffer } from "buffer";
 import { AppConfig } from "../config";
 
+interface IJwtPayload {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt?: any;
+  firstName: string;
+  lastName: string;
+  email: string;
+  iat: number;
+  exp: number;
+}
+
 function getKey(key: string) {
   return AppConfig.STORAGE_BASE_KEY + key;
 }
@@ -23,10 +35,10 @@ function removeItem(key: string) {
 }
 
 function getDurationFromToken(token: string): number {
-  const payload = JSON.parse(
+  const payload: IJwtPayload = JSON.parse(
     Buffer.from(token.split(".")[1], "base64").toString()
   );
-  const expiresIn = payload?.exp - payload?.iat;
+  const expiresIn = payload.exp - payload.iat;
 
   return expiresIn * 1000;
 }

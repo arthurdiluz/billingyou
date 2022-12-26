@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import Button from "@components/Button/Button";
 import Container from "@components/Container/Container";
 import Input from "@components/Form/Input";
@@ -9,7 +10,8 @@ import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
 import { CustomerService } from "@services/CustomerService";
 import { CustomerAddResolver } from "@validations/Customer";
 import { Controller, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { StorageHelper } from "@helpers/StorageHelper";
+import { FormatHelper } from "@helpers/FormatHelper";
 type ICustomersAddForm = Omit<ICustomer, "id">;
 
 export default function CustomerAddPage() {
@@ -20,9 +22,14 @@ export default function CustomerAddPage() {
     reset,
   } = useForm<ICustomersAddForm>({ resolver: CustomerAddResolver });
 
-  async function onSubmit(values: ICustomersAddForm) {
+  async function onSubmit({ userId, phone, ...values }: ICustomersAddForm) {
     try {
-      const { status } = await CustomerService.create(values);
+      const { id: userId } = StorageHelper.getItem("user");
+      const { status } = await CustomerService.create({
+        userId,
+        phone: FormatHelper.getRawPhoneNumber(phone),
+        ...values,
+      });
 
       if (status === HttpStatusCode.Created) {
         toast.success("Customer registered successfully");

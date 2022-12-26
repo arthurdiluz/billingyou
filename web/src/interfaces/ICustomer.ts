@@ -4,4 +4,5 @@ export default interface ICustomer {
   cpfCnpj: string;
   email: string;
   phone: string;
+  userId?: string;
 }
