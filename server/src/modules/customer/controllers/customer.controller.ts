@@ -33,13 +33,32 @@ export class CustomerController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Body() body: CreateCustomerDto) {
-    const { userId } = body;
-    const user = await this.userService.findById(userId);
-
-    if (!user) throw new NotFoundException(`User ID "${userId}" not found`);
-    if (user?.deletedAt) throw new ConflictException('User already deleted');
-
     try {
+      const { userId, cpfCnpj: newCpfCnpj, email: newEmail } = body;
+      const user = await this.userService.findById(userId);
+      const { cpfCnpj } = (await this.customerService.findByCpfCnpj(
+        newCpfCnpj,
+      )) || { undefined };
+      const { email } = (await this.customerService.findByEmail(newEmail)) || {
+        undefined,
+      };
+
+      if (!user) {
+        throw new NotFoundException(`User ID "${userId}" not found`);
+      }
+
+      if (newCpfCnpj === cpfCnpj) {
+        throw new ConflictException(
+          `Customer with CPF/CNPJ "${newCpfCnpj}" already exists`,
+        );
+      }
+
+      if (newEmail === email) {
+        throw new ConflictException(
+          `Customer with email "${email}" already exists`,
+        );
+      }
+
       return await this.customerService.create(body);
     } catch (Error) {
       throw Error;
@@ -102,10 +121,6 @@ export class CustomerController {
 
       if (!customer) {
         throw new NotFoundException('Customer not found');
-      }
-
-      if (customer?.deletedAt) {
-        throw new ConflictException('Customer already deleted');
       }
 
       return await this.customerService.softDelete(id);

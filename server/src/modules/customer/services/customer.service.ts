@@ -29,6 +29,13 @@ export class CustomerService {
   findById(id: string) {
     return this.customerRepository.findUnique({ where: { id } });
   }
+  findByEmail(email: string) {
+    return this.customerRepository.findUnique({ where: { email } });
+  }
+
+  findByCpfCnpj(cpfCnpj: string) {
+    return this.customerRepository.findUnique({ where: { cpfCnpj } });
+  }
 
   update(id: string, body: UpdateCustomerDto) {
     return this.customerRepository.update({
