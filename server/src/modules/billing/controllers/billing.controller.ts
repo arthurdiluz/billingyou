@@ -1,6 +1,5 @@
 import {
   Body,
-  ConflictException,
   Controller,
   Delete,
   Get,
@@ -56,16 +55,8 @@ export class BillingController {
         throw new NotFoundException(`User ID "${userId}" not found`);
       }
 
-      if (user?.deletedAt) {
-        throw new ConflictException('User already deleted');
-      }
-
       if (!customer) {
         throw new NotFoundException(`Customer ID "${customerId}" not found`);
-      }
-
-      if (customer?.deletedAt) {
-        throw new ConflictException('Customer already deleted');
       }
 
       return await this.billingService.create(body);
@@ -134,10 +125,6 @@ export class BillingController {
 
       if (!billing) {
         throw new NotFoundException(`Billing ID "${id}" not found`);
-      }
-
-      if (billing?.deletedAt) {
-        throw new ConflictException('Billing already deleted');
       }
 
       return await this.billingService.softDelete(id);

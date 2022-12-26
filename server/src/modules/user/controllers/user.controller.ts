@@ -92,7 +92,6 @@ export class UserController {
       const user = await this.userService.findById(id);
 
       if (!user) throw new NotFoundException('User not found');
-      if (user?.deletedAt) throw new ConflictException('User already deleted');
 
       return await this.userService.softDelete(id);
     } catch (Error) {
