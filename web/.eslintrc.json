@@ -20,21 +20,11 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": [
-            "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
+      "indent": ["alert", 2],
+      "linebreak-style": ["alert", "unix"],
+      "quotes": ["alert", "double"],
+      "semi": ["alert", "always"],
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }]
     }
 }
