@@ -14,6 +14,7 @@ import { IBillingForm } from "@interfaces/IBilling";
 import { BillingService } from "@services/BillingService";
 import { BillingResolver } from "@validations/Billing";
 import { HttpStatusCode } from "@enums/HttpStatusCode.enum";
+import { StorageHelper } from "@helpers/StorageHelper";
 
 export default function BillingAddPage() {
   const {
@@ -25,10 +26,13 @@ export default function BillingAddPage() {
   const { customersList, findCustomers } = useCustomer();
 
   async function onSubmit(values: IBillingForm) {
+    const { id: userId } = StorageHelper.getItem("user");
+
     try {
-      const { status } = await BillingService.create(
-        Billing.formToPayload(values)
-      );
+      const { status } = await BillingService.create({
+        userId,
+        ...Billing.formToPayload(values),
+      });
 
       if (status === HttpStatusCode.Created) {
         toast.success("Billing created successfully");

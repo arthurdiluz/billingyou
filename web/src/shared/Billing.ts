@@ -20,9 +20,9 @@ function parsePayload({
 
 function formToPayload(form: IBillingForm): ICreateBilling {
   return {
+    customerId: form.customerId.value,
     description: form.description,
     dueDate: DateTime.fromFormat(form.dueDate, "yyyy-MM-dd").toISO(),
-    customerId: form.customerId.value,
     value: String(CurrencyHelper.usdToNumber(form.value)),
   };
 }

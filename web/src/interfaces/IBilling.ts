@@ -1,4 +1,5 @@
 import ICustomer from "./ICustomer";
+import IUser from "./IUser";
 
 export interface IBilling {
   id: string;
@@ -8,6 +9,8 @@ export interface IBilling {
   dueDate: string;
   customerId: string;
   customer: Pick<ICustomer, "id" | "name">;
+  userId?: string;
+  user?: Pick<IUser, "id">;
 }
 
 export type ICreateBilling = Omit<IBilling, "id" | "customer" | "status">;
