@@ -1,20 +1,28 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
+import {
+  useFonts,
+  Poppins_300Light,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_700Bold,
+} from "@expo-google-fonts/poppins";
+import AppNavigations from "./src/navigations";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>BillingYou</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontsLoaded] = useFonts({
+    Poppins_300Light,
+    Poppins_400Regular,
+    Poppins_500Medium,
+    Poppins_700Bold,
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+  if (!fontsLoaded) {
+    return (
+      <>
+        <Text>Loading...</Text>
+      </>
+    );
+  }
+
+  return <AppNavigations />;
+}
