@@ -1,4 +1,7 @@
 export const Theme = {
+  colors: {
+    primary: "#01B4C2",
+  },
   fontsFamily: {
     display: {
       light: "Poppins_300Light",
