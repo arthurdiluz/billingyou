@@ -1,4 +1,3 @@
-import { Text } from "react-native";
 import {
   useFonts,
   Poppins_300Light,
@@ -6,9 +5,11 @@ import {
   Poppins_500Medium,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
-import AppNavigations from "./src/navigations";
+import { AppNavigation } from "./src/navigations";
+import { AuthProvider } from "./src/contexts/AuthContext";
+import { LoadingScreen } from "./src/screens/Loading/LoadingScreen";
 
-export default function App() {
+export function App() {
   const [fontsLoaded] = useFonts({
     Poppins_300Light,
     Poppins_400Regular,
@@ -17,12 +18,12 @@ export default function App() {
   });
 
   if (!fontsLoaded) {
-    return (
-      <>
-        <Text>Loading...</Text>
-      </>
-    );
+    return <LoadingScreen />;
   }
 
-  return <AppNavigations />;
+  return (
+    <AuthProvider>
+      <AppNavigation />
+    </AuthProvider>
+  );
 }
