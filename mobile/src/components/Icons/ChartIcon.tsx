@@ -6,7 +6,7 @@ type Props = {
   fill?: string;
 };
 
-export default function ChartIcon({
+export function ChartIcon({
   width = 29,
   height = 29,
   fill = "#01B4C2",

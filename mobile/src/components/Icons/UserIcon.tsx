@@ -6,11 +6,7 @@ type Props = {
   fill?: string;
 };
 
-export default function UserIcon({
-  width = 29,
-  height = 29,
-  fill = "#01B4C2",
-}: Props) {
+export function UserIcon({ width = 29, height = 29, fill = "#01B4C2" }: Props) {
   return (
     <Svg width={width} height={height} viewBox="0 0 29 29" fill="none">
       <Path

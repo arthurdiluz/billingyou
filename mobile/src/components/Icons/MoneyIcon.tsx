@@ -6,7 +6,7 @@ type Props = {
   fill?: string;
 };
 
-export default function MoneyIcon({
+export function MoneyIcon({
   width = 17,
   height = 29,
   fill = "#01B4C2",

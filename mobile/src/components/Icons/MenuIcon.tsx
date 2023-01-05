@@ -6,11 +6,7 @@ type Props = {
   fill?: string;
 };
 
-export default function MenuIcon({
-  width = 24,
-  height = 22,
-  fill = "#000",
-}: Props) {
+export function MenuIcon({ width = 24, height = 22, fill = "#000" }: Props) {
   return (
     <Svg width={width} height={height} viewBox="0 0 24 22" fill="none">
       <Path

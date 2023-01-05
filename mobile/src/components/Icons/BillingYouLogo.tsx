@@ -6,7 +6,7 @@ type Props = {
   height?: number;
 };
 
-export default function BillingYouLogo({ width = 148, height = 30 }: Props) {
+export function BillingYouLogo({ width = 150, height = 30 }: Props) {
   return (
     <Svg width={width} height={height} viewBox="0 0 148 30" fill="none">
       <Path
@@ -16,10 +16,10 @@ export default function BillingYouLogo({ width = 148, height = 30 }: Props) {
         fillRule="evenodd"
       />
       <Text
-        stroke="null"
+        stroke="#000"
         fontWeight="bold"
         textAnchor="start"
-        fontFamily="'Cabin'"
+        fontFamily="'Arial'"
         fontSize={24}
         strokeWidth={0}
         y={25}
