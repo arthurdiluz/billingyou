@@ -1,21 +1,40 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import AboutScreen from "../screens/About/AboutScreen";
-import BillingsScreen from "../screens/Billing/BillingsScreen";
-import CustomersScreen from "../screens/Customer/CustomersScreen";
-import DashboardScreen from "../screens/Dashboard/DashboardScreen";
+import { TabBar } from "../components/TabBar/TabBar";
+import { AboutScreen } from "../screens/About/AboutScreen";
+import { BillingsScreen } from "../screens/Billing/BillingsScreen";
+import { CustomersScreen } from "../screens/Customer/CustomersScreen";
+import { DashboardStackNavigation } from "./DashboardStackNavigation";
 
 const Tab = createBottomTabNavigator();
 
-export default function AuthenticatedNavigation() {
+export function AuthenticatedNavigation() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator initialRouteName="Dashboard">
-        <Tab.Screen name="Dashboard" component={DashboardScreen} />
-        <Tab.Screen name="Billings" component={BillingsScreen} />
-        <Tab.Screen name="Customers" component={CustomersScreen} />
-        <Tab.Screen name="About" component={AboutScreen} />
+    <>
+      <Tab.Navigator
+        tabBar={(props) => <TabBar {...props} />}
+        initialRouteName="Dashboard"
+      >
+        <Tab.Screen
+          name="Dashboard"
+          component={DashboardStackNavigation}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Billings"
+          component={BillingsScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Customers"
+          component={CustomersScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="About"
+          component={AboutScreen}
+          options={{ headerShown: false }}
+        />
       </Tab.Navigator>
-    </NavigationContainer>
+    </>
   );
 }

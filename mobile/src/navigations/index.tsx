@@ -1,8 +1,14 @@
-import AuthenticatedNavigation from "./AuthenticatedNavigation";
-import UnauthenticatedNavigation from "./UnauthenticatedNavigation";
+import { NavigationContainer } from "@react-navigation/native";
+import { useAuthContext } from "../contexts/AuthContext";
+import { AuthenticatedNavigation } from "./AuthenticatedNavigation";
+import { UnauthenticatedNavigation } from "./UnauthenticatedNavigation";
 
-export default function AppNavigations() {
-  const isAuth = true;
+export function AppNavigation() {
+  const { isAuth, checkExpiresIn } = useAuthContext();
 
-  return isAuth ? <AuthenticatedNavigation /> : <UnauthenticatedNavigation />;
+  return (
+    <NavigationContainer onStateChange={() => checkExpiresIn()}>
+      {isAuth ? <AuthenticatedNavigation /> : <UnauthenticatedNavigation />}
+    </NavigationContainer>
+  );
 }
