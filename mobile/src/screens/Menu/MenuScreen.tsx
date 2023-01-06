@@ -15,6 +15,7 @@ type Props = {
 
 export function MenuScreen({ navigation }: Props) {
   const { logout } = useAuthContext();
+
   return (
     <View style={styles.container}>
       <SafeAreaView edges={["top", "left", "right"]} style={styles.safeArea}>
@@ -27,7 +28,7 @@ export function MenuScreen({ navigation }: Props) {
             }
           />
           <Title>Settings</Title>
-          <Button label="Sair" onPress={logout} />
+          <Button label="Logout" onPress={logout} />
         </ScrollView>
       </SafeAreaView>
     </View>

@@ -32,7 +32,7 @@ export function SignInScreen() {
           <View style={styles.logoContainer}>
             <BillingYouLogo width={180} />
           </View>
-          <View style={{ marginBottom: 30 }}>
+          <View style={styles.title}>
             <Title>Access your account</Title>
           </View>
           <Controller
@@ -62,7 +62,6 @@ export function SignInScreen() {
               />
             )}
           />
-
           <Button label="Sign In" onPress={handleSubmit(onSubmit)} />
         </ScrollView>
       </SafeAreaView>
@@ -81,9 +80,14 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     width: "100%",
-    paddingVertical: 20,
+    paddingVertical: 10,
+    alignItems: "center",
   },
   content: {
     padding: 20,
+  },
+  title: {
+    marginBottom: 30,
+    alignItems: "center",
   },
 });
