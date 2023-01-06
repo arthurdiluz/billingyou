@@ -1,9 +1,16 @@
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ChartIcon } from "../Icons/ChartIcon";
 import { MoneyIcon } from "../Icons/MoneyIcon";
 import { UserIcon } from "../Icons/UserIcon";
 import { TabBarButton } from "./TabBarButton";
+
+type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: NativeStackNavigationProp<any>;
+  state: any;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function TabBar({ state, navigation }: any) {
