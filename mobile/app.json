@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "billingyou-mobile",
+    "slug": "billingyou",
+    "entryPoint": "./index.js",
+    "version": "0.0.1",
+    "githubUrl": "https://github.com/arthurdiluz/billingyou",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/32734af6-4f91-43d2-9f43-2272af537344"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "jsEngine": "hermes"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "jsEngine": "hermes",
+    "extra": {
+      "eas": {
+        "projectId": "32734af6-4f91-43d2-9f43-2272af537344"
+      }
+    },
+    "owner": "arthurdiluz",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}
