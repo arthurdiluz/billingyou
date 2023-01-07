@@ -44,7 +44,7 @@ export function SignUpScreen() {
               <TextInput
                 placeholder="First name"
                 keyboardType="default"
-                autoCapitalize="characters"
+                autoCapitalize="words"
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
@@ -58,7 +58,7 @@ export function SignUpScreen() {
               <TextInput
                 placeholder="Last name"
                 keyboardType="default"
-                autoCapitalize="characters"
+                autoCapitalize="words"
                 onChangeText={onChange}
                 errors={errors}
                 {...field}
