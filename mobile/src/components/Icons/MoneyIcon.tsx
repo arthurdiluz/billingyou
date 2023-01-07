@@ -6,11 +6,7 @@ type Props = {
   fill?: string;
 };
 
-export function MoneyIcon({
-  width = 17,
-  height = 29,
-  fill = "#01B4C2",
-}: Props) {
+export function MoneyIcon({ width = 17, height = 32, fill = "#01B4C2" }: Props) {
   return (
     <Svg width={width} height={height} viewBox="0 0 17 29" fill="none">
       <Path
